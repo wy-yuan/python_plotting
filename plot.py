@@ -73,6 +73,26 @@ def plot_with_rectangle(x, y):
     plt.savefig("./figures_with_rectangle.svg")
     plt.show()
 
+def subplot_adjust_hwRatios(x, y):
+    gs_kw = dict(width_ratios=[1, 1], height_ratios=[1, 2])
+    fig, axd = plt.subplot_mosaic([['up1', 'up2'], ['down', 'down']], gridspec_kw=gs_kw,
+                                  figsize=(88.9 / 25.4, 88.9 / 25.4 * 1.2), layout="tight")
+    plt.rcParams['font.family'] = 'Times New Roman'
+    for k, ax in axd.items():
+        print(k, ax)
+
+    axd["up1"].tick_params(labelsize=8, pad=0.01, length=2)
+    axd["up1"].plot(x, y)
+    axd["up2"].tick_params(labelsize=8, pad=0.01, length=2)
+    axd["up2"].plot(x, y)
+    axd["down"].tick_params(labelsize=8, pad=0.01, length=2)
+    axd["down"].plot(x, y)
+
+    plt.tight_layout()
+    plt.savefig("./figures_subplot_adjust_hwRatios.svg")
+    plt.show()
+
+
 if __name__ == '__main__':
     x = np.linspace(0, 100, 1000)
     y = np.sin(x)
@@ -81,3 +101,5 @@ if __name__ == '__main__':
     plot_two_axis(x, y)
 
     plot_with_rectangle(x, y)
+
+    subplot_adjust_hwRatios(x[:100], y[:100])
